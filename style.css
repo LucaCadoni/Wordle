@@ -13,7 +13,7 @@ body{
     gap: 1vh;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 body.center{
@@ -75,12 +75,17 @@ c-wordle{
     max-width: 100%;
 }
 
-c-wordle .row{
-    display: flex;
+.row{
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2vh;
+    margin-top: 3vh;
+}
+
+.row.show{
+    display: flex;
 }
 
 wordle-row{

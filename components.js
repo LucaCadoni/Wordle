@@ -42,6 +42,16 @@ class WordleRow extends HTMLElement{
         return current;
     }
 
+    get value(){
+        let str = "";
+        let current = this.start;
+        while(current){
+            str += current.input.value;
+            current = current.next;
+        }
+        return str;
+    }
+
     set disabled(value){
         let current = this.start;
         while(current){
@@ -120,19 +130,15 @@ class Wordle extends HTMLElement{
     }
 
     start(){
+        row.classList.remove("show");
         this.innerHTML = "";
         this.memory = [];
         this.appendRow();
     }
 
     lose(){
-        this.innerHTML += `
-            <div class="row">
-                <h2>Hai perso!!</h2>
-                <button>Ricomincia</button>
-            </div>
-        `;
-        this.querySelector(".row button").addEventListener("click", this.start.bind(this));
+        row.classList.toggle("show");
+        row.querySelector(".row button").addEventListener("click", this.start.bind(this));
     }
 
     appendRow(){
@@ -180,6 +186,7 @@ customElements.define("c-wordle", Wordle);
 customElements.define("wordle-row", WordleRow);
 
 var info = null;
+var row = null;
 
 function error(){
     document.body.classList.add("center");
@@ -192,6 +199,8 @@ function error(){
 }
 
 window.onload = () => {
+
+    row = document.querySelector(".row");
 
     document.querySelector(".info").addEventListener("click", ()=>{
         info = document.getElementById("info-text");
