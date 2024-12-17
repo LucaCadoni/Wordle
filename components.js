@@ -189,7 +189,7 @@ window.onload = () => {
         throw error();
     }
 
-    if(pos > 1 || pos < 0){
+    if(pos > 1 || pos < 0 || pos == NaN){
         throw error();
     }
 
