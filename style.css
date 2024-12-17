@@ -29,6 +29,10 @@ h1{
     gap: 1vh;
 }
 
+h2{
+    text-align: center;
+}
+
 p{
     padding: 2vh;
     max-width: 300px;
