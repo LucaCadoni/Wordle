@@ -116,7 +116,7 @@ class Wordle extends HTMLElement{
     }
 
     lose(){
-        this.innerHTML = `
+        this.innerHTML += `
             <div class="row">
                 <h2>Hai perso!!</h2>
                 <button>Ricomincia</button>
