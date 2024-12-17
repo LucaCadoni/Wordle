@@ -25,11 +25,10 @@ class WordleRow extends HTMLElement{
             this.start = new WordleNode(null, node);
             this.last = this.start;
         }else{
-            this.last.callback = null;
             this.last.next = new WordleNode(this.last, node);
             this.last = this.last.next;
-            this.last.callback = callback;
         }
+        this.last.callback = callback;
         this.appendChild(this.last.target);
     }
 
@@ -49,6 +48,17 @@ class WordleRow extends HTMLElement{
             current.input.disabled = value;
             current = current.next;
         }
+    }
+
+    isFill(){
+        let fill = true;
+        let current = this.start;
+        while(current){
+            if(current.input.value == "")
+                fill = false;
+            current = current.next;
+        }
+        return fill;
     }
 }
 
@@ -80,10 +90,10 @@ class WordleNode{
                     event.preventDefault();
                 }else if(this.next){
                     setTimeout(()=> {this.next.input.focus()}, 10);
-                }else if(!this.next){
-                    if(this.callback)
-                        setTimeout(()=> {this.callback()}, 10);
                 }
+                
+                if(this.callback)
+                    setTimeout(()=> {this.callback()}, 10);
 
             });
     
@@ -137,6 +147,9 @@ class Wordle extends HTMLElement{
         let last = this.memory.length - 1;
         let win = true;
 
+        if(!this.memory[last].isFill())
+            return true;
+
         this.memory[last].disabled = true;
 
         for(let i=0; i<this.word.length; i++){
@@ -167,6 +180,17 @@ customElements.define("c-wordle", Wordle);
 customElements.define("wordle-row", WordleRow);
 
 var info = null;
+
+function error(){
+    document.body.classList.add("center");
+    document.body.innerHTML = `
+        <h2>
+            Ei questo link è sbagliato!
+        </h2>
+        <p>Prova a riscannerizzare il qr code oppure contatta <b>luca il bellissimo</b></p>
+    `;
+}
+
 window.onload = () => {
 
     document.querySelector(".info").addEventListener("click", ()=>{
@@ -181,7 +205,7 @@ window.onload = () => {
         throw error();
     }
 
-    pos = 0;
+    let pos = 0;
     try{
         pos = parseInt(param.replace('?', '').split('=')[1]);
         console.log(pos);
@@ -189,7 +213,7 @@ window.onload = () => {
         throw error();
     }
 
-    if(pos > 1 || pos < 0 || !pos){
+    if(pos > 1 || pos < 0 || (!pos && pos != 0)){
         throw error();
     }
 
@@ -200,14 +224,4 @@ window.onload = () => {
 window.onclick = (e)=>{
     if(info && !e.target.classList.contains("info"))
         info.classList.remove("open");
-}
-
-function error(){
-    document.body.classList.add("center");
-    document.body.innerHTML = `
-        <h2>
-            Ei questo link è sbagliato!
-        </h2>
-        <p>Prova a riscannerizzare il qr code oppure contatta <b>luca il bellissimo</b></p>
-    `;
 }
