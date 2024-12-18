@@ -91,16 +91,21 @@ class WordleNode{
     
             this.input = document.createElement("input");
             this.input.type = "text";
+            this.input.maxLength = 1;
             this.input.addEventListener("keydown", async event =>{
+
                 if(event.key == "Backspace"){
                     if(this.input.value.length == 0 && this.prec){
                         setTimeout(()=> {this.prec.input.focus()}, 10);
                     }
-                }else if(this.input.value.length > 0){
+                }else if(event.key.length == 1){
                     event.preventDefault();
-                }else if(this.next){
-                    setTimeout(()=> {this.next.input.focus()}, 10);
+                    this.input.value = event.key.toUpperCase();
+                    if(this.next){
+                        this.next.input.focus();
+                    }
                 }
+                
                 
                 if(this.callback)
                     setTimeout(()=> {this.callback()}, 10);
@@ -119,7 +124,7 @@ class WordleNode{
 class Wordle extends HTMLElement{
     
     memory = [];
-    words = ["ulivo", "volpe"];
+    words = ["ULIVO", "VOLPE"];
     word = "";
 
     constructor(wordPos){
