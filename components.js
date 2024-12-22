@@ -227,7 +227,7 @@ window.onload = () => {
         throw error();
     }
 
-    if(pos > 1 || pos < 0 || (!pos && pos != 0)){
+    if(pos >= Wordle.words.length || pos < 0 || (!pos && pos != 0)){
         throw error();
     }
 
