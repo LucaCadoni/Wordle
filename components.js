@@ -124,12 +124,12 @@ class WordleNode{
 class Wordle extends HTMLElement{
     
     memory = [];
-    static words = ["ULIVO", "VOLPE", "EXTRA", "BISCA"];
+    words = ["ULIVO", "VOLPE", "EXTRA", "BISCA"];
     word = "";
 
     constructor(wordPos){
         super();
-        this.word = Wordle.words[wordPos];
+        this.word = this.words[wordPos];
         this.memory = [];
         this.start();
     }
@@ -227,7 +227,7 @@ window.onload = () => {
         throw error();
     }
 
-    if(pos >= Wordle.words.length || pos < 0 || (!pos && pos != 0)){
+    if(pos >= 4 || pos < 0 || (!pos && pos != 0)){
         throw error();
     }
 
