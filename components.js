@@ -124,12 +124,12 @@ class WordleNode{
 class Wordle extends HTMLElement{
     
     memory = [];
-    words = ["ULIVO", "VOLPE", "EXTRA", "BISCA"];
+    static words = ["ULIVO", "VOLPE", "EXTRA", "BISCA"];
     word = "";
 
     constructor(wordPos){
         super();
-        this.word = this.words[wordPos];
+        this.word = Wordle.words[wordPos];
         this.memory = [];
         this.start();
     }
