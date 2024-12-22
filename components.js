@@ -124,7 +124,7 @@ class WordleNode{
 class Wordle extends HTMLElement{
     
     memory = [];
-    words = ["ULIVO", "VOLPE"];
+    words = ["ULIVO", "VOLPE", "EXTRA", "BISCA"];
     word = "";
 
     constructor(wordPos){
@@ -166,7 +166,7 @@ class Wordle extends HTMLElement{
         for(let i=0; i<this.word.length; i++){
             let letter = this.memory[last].get(i);
             console.log(letter);
-            let value = letter.input.value;
+            let value = letter.input.value.toUpperCase();
             if(value == this.word[i]){
                 letter.target.classList.add("correct");
             }else if(this.word.includes(value)){
